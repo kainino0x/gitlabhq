@@ -40,11 +40,7 @@ module API
       #  POST /groups/:id/members
       post ":id/members" do
         group = find_group(params[:id])
-        begin
-          authorize! :manage_group, group
-        rescue
-          authenticated_as_admin!
-        end
+        authorize! :manage_group, group
         required_attributes! [:user_id, :access_level]
 
         unless validate_access_level?(params[:access_level])
